@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='interval_schedular',
+    name='schedular',
     version='0.1',
     packages=['venv.Lib.distutils', 'venv.Lib.encodings', 'venv.Lib.site-packages.pip',
               'venv.Lib.site-packages.pip._vendor', 'venv.Lib.site-packages.pip._vendor.idna',
@@ -34,9 +34,9 @@ setup(
               'venv.Lib.site-packages.setuptools.command', 'venv.Lib.site-packages.pkg_resources',
               'venv.Lib.site-packages.pkg_resources.extern', 'venv.Lib.site-packages.pkg_resources._vendor',
               'venv.Lib.site-packages.pkg_resources._vendor.packaging', 'interval_schedular'],
-    url='https://pypi.org/project/interval_schedular/',
+    url='https://pypi.org/project/schedular/',
     license='MIT Lincense',
     author='morgan heijdemann',
     author_email='targhan@gmail.com',
-    description='Schedule your intervalled jobs by day and start - end time'
+    description='Schedular is here to schedule jobs by cut off time or jobs that require start+end+interval.'
 )
