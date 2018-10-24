@@ -371,9 +371,9 @@ def test_job(param):
 
 if __name__ == '__main__':
     schedular = MyScheduler(threaded=True, skip_unfinished_jobs=True)
-    job1 = Job(start_time="10:00:00", end_time="15:33:00", days=["thu", "wed", "tue"], interval="10s", job=test_job, jobArgs="1", group="cam2")
-    job2 = Job(start_time="10:00:00", end_time="15:34:00", days=["thu", "wed", "tue"], interval="10s", job=test_job, jobArgs="2", group="cam2")
-    job3 = Job(start_time="10:00:00", end_time="15:35:00", days=["thu", "wed", "tue"], interval="10s", job=test_job, jobArgs="3", group="cam2")
+    job1 = Job(start_time="10:00:00", end_time="18:33:00", days=["thu", "wed", "tue"], interval="10s", job=test_job, jobArgs="1", group="cam2")
+    job2 = Job(start_time="10:00:00", end_time="18:34:00", days=["thu", "wed", "tue"], interval="10s", job=test_job, jobArgs="2", group="cam2")
+    job3 = Job(start_time="10:00:00", end_time="18:35:00", days=["thu", "wed", "tue"], interval="10s", job=test_job, jobArgs="3", group="cam2")
     job4 = Job(cut_off_time="16:00:00", days=["thu", "wed", "tue"], job=test_job, jobArgs="job4:once", group="cam1")
     schedular.schedule(job1)
     schedular.schedule(job2)

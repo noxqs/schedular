@@ -1,42 +1,75 @@
+import setuptools
 from setuptools import setup
 
 setup(
-    name='schedular',
-    version='0.1',
-    packages=['venv.Lib.distutils', 'venv.Lib.encodings', 'venv.Lib.site-packages.pip',
-              'venv.Lib.site-packages.pip._vendor', 'venv.Lib.site-packages.pip._vendor.idna',
-              'venv.Lib.site-packages.pip._vendor.pytoml', 'venv.Lib.site-packages.pip._vendor.certifi',
-              'venv.Lib.site-packages.pip._vendor.chardet', 'venv.Lib.site-packages.pip._vendor.chardet.cli',
-              'venv.Lib.site-packages.pip._vendor.distlib', 'venv.Lib.site-packages.pip._vendor.distlib._backport',
-              'venv.Lib.site-packages.pip._vendor.msgpack', 'venv.Lib.site-packages.pip._vendor.urllib3',
-              'venv.Lib.site-packages.pip._vendor.urllib3.util', 'venv.Lib.site-packages.pip._vendor.urllib3.contrib',
-              'venv.Lib.site-packages.pip._vendor.urllib3.contrib._securetransport',
-              'venv.Lib.site-packages.pip._vendor.urllib3.packages',
-              'venv.Lib.site-packages.pip._vendor.urllib3.packages.backports',
-              'venv.Lib.site-packages.pip._vendor.urllib3.packages.ssl_match_hostname',
-              'venv.Lib.site-packages.pip._vendor.colorama', 'venv.Lib.site-packages.pip._vendor.html5lib',
-              'venv.Lib.site-packages.pip._vendor.html5lib._trie',
-              'venv.Lib.site-packages.pip._vendor.html5lib.filters',
-              'venv.Lib.site-packages.pip._vendor.html5lib.treewalkers',
-              'venv.Lib.site-packages.pip._vendor.html5lib.treeadapters',
-              'venv.Lib.site-packages.pip._vendor.html5lib.treebuilders', 'venv.Lib.site-packages.pip._vendor.lockfile',
-              'venv.Lib.site-packages.pip._vendor.progress', 'venv.Lib.site-packages.pip._vendor.requests',
-              'venv.Lib.site-packages.pip._vendor.packaging', 'venv.Lib.site-packages.pip._vendor.cachecontrol',
-              'venv.Lib.site-packages.pip._vendor.cachecontrol.caches',
-              'venv.Lib.site-packages.pip._vendor.webencodings', 'venv.Lib.site-packages.pip._vendor.pkg_resources',
-              'venv.Lib.site-packages.pip._internal', 'venv.Lib.site-packages.pip._internal.req',
-              'venv.Lib.site-packages.pip._internal.vcs', 'venv.Lib.site-packages.pip._internal.utils',
-              'venv.Lib.site-packages.pip._internal.models', 'venv.Lib.site-packages.pip._internal.commands',
-              'venv.Lib.site-packages.pip._internal.operations', 'venv.Lib.site-packages.wheel',
-              'venv.Lib.site-packages.wheel.tool', 'venv.Lib.site-packages.wheel.signatures',
-              'venv.Lib.site-packages.setuptools', 'venv.Lib.site-packages.setuptools.extern',
-              'venv.Lib.site-packages.setuptools._vendor', 'venv.Lib.site-packages.setuptools._vendor.packaging',
-              'venv.Lib.site-packages.setuptools.command', 'venv.Lib.site-packages.pkg_resources',
-              'venv.Lib.site-packages.pkg_resources.extern', 'venv.Lib.site-packages.pkg_resources._vendor',
-              'venv.Lib.site-packages.pkg_resources._vendor.packaging', 'interval_schedular'],
-    url='https://pypi.org/project/schedular/',
-    license='MIT Lincense',
-    author='morgan heijdemann',
-    author_email='targhan@gmail.com',
-    description='Schedular is here to schedule jobs by cut off time or jobs that require start+end+interval.'
+    name="schedular",
+    version="1.0.1",
+    author="Morgan NoXQS Heijdemann",
+    author_email="targhan@gmail.com",
+    description="Schedular is here to schedule jobs by cut off time or jobs that require start+end+interval.",
+    long_description="""
+    # Schedular
+
+Schedular is a Python 2 scheduling library to create two types of jobs:
+ - Jobs running at certain interval at certain days from start time till end time
+ - Jobs that are triggered at a specific time of a specific day
+# Features
+  - Jobs can be put into groups which ensures sequencial execution of these jobs withing each group.
+  - Jobs not in any group will be run parallel.
+
+
+# Examples
+
+```py
+import schedular
+
+def test_job(param):
+    print param,"start",
+    time.sleep(2)
+    print "finished"
+    
+schedular = MyScheduler(threaded=True, skip_unfinished_jobs=True)
+job1 = Job(start_time="10:00:00", end_time="15:33:00", days=["thu", "wed", "tue"], interval="10s", job=test_job, jobArgs="1", group="cam2")
+job2 = Job(start_time="10:00:00", end_time="15:34:00", days=["thu", "wed", "tue"], interval="10s", job=test_job, jobArgs="2", group="cam2")
+job3 = Job(start_time="10:00:00", end_time="15:35:00", days=["thu", "wed", "tue"], interval="10s", job=test_job, jobArgs="3", group="cam2")
+job4 = Job(cut_off_time="16:00:00", days=["thu", "wed", "tue"], job=test_job, jobArgs="job4:once", group="cam1")
+schedular.schedule(job1)
+schedular.schedule(job2)
+schedular.schedule(job3)
+schedular.schedule(job4)
+schedular.info(by_group=True)
+schedular.start()
+time.sleep(3000000)
+schedular.stop()
+print "Done."
+```
+gives output:
+```
+[ JOBS at Wed 24-10-2018 15:59:51]
+
+- GROUP cam1
+   ID:3 DAYS:thu, wed, tue ST:NONE ET:NONE INT:NONE JOB:test_job(job4:once), NEXT: Thu 25-10-2018 16:00:00 (this week)[ACTIVE]
+
+- GROUP cam2
+   ID:0 DAYS:thu, wed, tue ST:10:00:00 ET:18:33:00 INT:10s. JOB:test_job(1), NEXT: Wed 24-10-2018 16:00:00 (this week) [ACTIVE]
+   ID:1 DAYS:thu, wed, tue ST:10:00:00 ET:18:34:00 INT:10s. JOB:test_job(2), NEXT: Wed 24-10-2018 16:00:00 (this week) [ACTIVE]
+   ID:2 DAYS:thu, wed, tue ST:10:00:00 ET:18:35:00 INT:10s. JOB:test_job(3), NEXT: Wed 24-10-2018 16:00:00 (this week) [ACTIVE]
+1 start finished
+2 start finished
+3 start finished
+```
+
+Although released as 1.0, there might be bugs. Don't use this is production software. 
+Github project at https://github.com/noxqs/schedular
+
+Licensed udner the MIT License, enjoy""",
+    long_description_content_type="text/markdown",
+    url="https://github.com/noxqs/schedular",
+    packages=setuptools.find_packages(),
+    classifiers=[
+        "Programming Language :: Python :: 2",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    license='MIT Lincense'
 )
