@@ -1,9 +1,15 @@
 import setuptools
 from setuptools import setup
 
+
+# pip install wheel twine
+# python setup.py sdist bdist_wheel
+# twine upload dist/*
+
+
 setup(
     name="schedular",
-    version="1.0.1",
+    version="1.0.4",
     author="Morgan NoXQS Heijdemann",
     author_email="targhan@gmail.com",
     description="Schedular is here to schedule jobs by cut off time or jobs that require start+end+interval.",
@@ -21,7 +27,7 @@ Schedular is a Python 2 scheduling library to create two types of jobs:
 # Examples
 
 ```py
-import schedular
+from schedular import Schedular, Job
 
 def test_job(param):
     print param,"start",
@@ -41,7 +47,6 @@ schedular.info(by_group=True)
 schedular.start()
 time.sleep(3000000)
 schedular.stop()
-print "Done."
 ```
 gives output:
 ```
@@ -62,7 +67,7 @@ gives output:
 Although released as 1.0, there might be bugs. Don't use this is production software. 
 Github project at https://github.com/noxqs/schedular
 
-Licensed udner the MIT License, enjoy""",
+Licensed under the MIT License, enjoy""",
     long_description_content_type="text/markdown",
     url="https://github.com/noxqs/schedular",
     packages=setuptools.find_packages(),
@@ -71,5 +76,6 @@ Licensed udner the MIT License, enjoy""",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    license='MIT Lincense'
+    license='MIT License'
 )
+

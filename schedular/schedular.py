@@ -234,7 +234,7 @@ class Job():
         self.job(self.jobArgs)
 
 
-class MyScheduler:
+class Schedular:
     def __init__(self, threaded=False, skip_unfinished_jobs=True):
         self.jobIndex       = 0
         self.threaded       = threaded
@@ -370,7 +370,7 @@ def test_job(param):
     print "finished"
 
 if __name__ == '__main__':
-    schedular = MyScheduler(threaded=True, skip_unfinished_jobs=True)
+    schedular = Schedular(threaded=True, skip_unfinished_jobs=True)
     job1 = Job(start_time="10:00:00", end_time="18:33:00", days=["thu", "wed", "tue"], interval="10s", job=test_job, jobArgs="1", group="cam2")
     job2 = Job(start_time="10:00:00", end_time="18:34:00", days=["thu", "wed", "tue"], interval="10s", job=test_job, jobArgs="2", group="cam2")
     job3 = Job(start_time="10:00:00", end_time="18:35:00", days=["thu", "wed", "tue"], interval="10s", job=test_job, jobArgs="3", group="cam2")
